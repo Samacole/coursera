@@ -55,23 +55,24 @@ def clumpfinding(genome, k, t, L):
     freqarray = computingfrequencies(text, k)
     for i in range(0, 4**k):
         if freqarray[i] >= t:
-            clump[i] = 1
+            clump[i] = clump[i] + 1
         for i in range (1, len(genome) - L + 1):
-            fp = genome[i - 1:i+ k]
+            fp = genome[i - 1:i - 1+ k]
             index = patterntonumber(fp)
             freqarray[index] = freqarray[index] - 1
             lp = genome[i + L - k:i + L]
             index = patterntonumber(lp)
-            freqarray[index] = freqarray[index] - 1
-            if freqarray[i] >= t:
-                clump[index] = 1
+            freqarray[index] = freqarray[index] + 1
+            if freqarray[index] >= t:
+                clump[index] = clump[i] + 1
         for i in range(0, 4**k):
+            print(clump)
             if clump[i] == 1:
                 pat = numbertopattern(i, k)
                 freqpat.append(pat)
-        return (freqpat)
+            return (freqpat)
 gen1 = "CGGACTCGACAGATGTGAAGAACGACAATGTGAAGACTCGACACGACAGAGTGAAGAGAAGAGGAAACATTGTAA"
-k = 5
-L = 50
-t = 4
-print (clumpfinding(gen1, k, t, L))
+k1 = 5
+L1 = 50
+t1 = 4
+print (clumpfinding(gen1, k1, t1, L1))
