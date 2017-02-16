@@ -17,4 +17,30 @@ def numbertopattern(index, k):
     prepat = numbertopattern(d, k-1)
     return prepat + q
 
-print (numbertopattern(8779, 11))
+def computingfrequencies(Text, k):
+    i = 0
+    j = 0
+    freq = []
+    for i in range(0, 4**k):
+        freq.append(0)
+    for i in range(0, len(Text)-k + 1):
+        a = Text[i:i + k]
+#        print (a)
+        b = patterntonumber(a)
+#        print (b)
+        freq[b] = freq[b] + 1
+        i += 1
+    return (freq)
+
+
+def fasterfreqwords(Text, k):
+    freqpat = []
+    freqarray = computingfrequencies(Text, k)
+    maxcount = max(freqarray)
+    for i in range(0, 4 ** k):
+        if freqarray(i) == maxcount:
+            pat = numbertopatter(i:k)
+            freqpat.append(pat)
+    return (freqpat)
+
+print (fasterfreqwords())
