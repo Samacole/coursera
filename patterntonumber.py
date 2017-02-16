@@ -38,9 +38,40 @@ def fasterfreqwords(Text, k):
     freqarray = computingfrequencies(Text, k)
     maxcount = max(freqarray)
     for i in range(0, 4 ** k):
-        if freqarray(i) == maxcount:
-            pat = numbertopatter(i:k)
+        if freqarray[i] == maxcount:
+            pat = numbertopattern(freqarray[i:k])
             freqpat.append(pat)
     return (freqpat)
 
-print (fasterfreqwords())
+
+
+def clumpfinding(genome, k, t, L):
+    freqpat = []
+    clump = []
+    freqarray =[]
+    for i in range(0, 4**k):
+        clump.append(0)
+    text = genome[:L]
+    freqarray = computingfrequencies(text, k)
+    for i in range(0, 4**k):
+        if freqarray[i] >= t:
+            clump[i] = 1
+        for i in range (1, len(genome) - L + 1):
+            fp = genome[i - 1:i+ k]
+            index = patterntonumber(fp)
+            freqarray[index] = freqarray[index] - 1
+            lp = genome[i + L - k:i + L]
+            index = patterntonumber(lp)
+            freqarray[index] = freqarray[index] - 1
+            if freqarray[i] >= t:
+                clump[index] = 1
+        for i in range(0, 4**k):
+            if clump[i] == 1:
+                pat = numbertopattern(i, k)
+                freqpat.append(pat)
+        return (freqpat)
+gen1 = "CGGACTCGACAGATGTGAAGAACGACAATGTGAAGACTCGACACGACAGAGTGAAGAGAAGAGGAAACATTGTAA"
+k = 5
+L = 50
+t = 4
+print (clumpfinding(gen1, k, t, L))
