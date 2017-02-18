@@ -13,8 +13,8 @@ def numbertopattern(index, k):
         return l[index]
     d = index / 4
     s = index % 4
-    q = l[s]
-    prepat = numbertopattern(d, k-1)
+    q = l[int(s)]
+    prepat = numbertopattern(int(d), k-1)
     return prepat + q
 
 def computingfrequencies(Text, k):
@@ -53,26 +53,30 @@ def clumpfinding(genome, k, t, L):
         clump.append(0)
     text = genome[:L]
     freqarray = computingfrequencies(text, k)
+#    print(freqarray)
     for i in range(0, 4**k):
         if freqarray[i] >= t:
-            clump[i] = clump[i] + 1
-        for i in range (1, len(genome) - L + 1):
-            fp = genome[i - 1:i - 1+ k]
-            index = patterntonumber(fp)
-            freqarray[index] = freqarray[index] - 1
-            lp = genome[i + L - k:i + L]
-            index = patterntonumber(lp)
-            freqarray[index] = freqarray[index] + 1
-            if freqarray[index] >= t:
-                clump[index] = clump[i] + 1
-        for i in range(0, 4**k):
-            print(clump)
-            if clump[i] == 1:
-                pat = numbertopattern(i, k)
-                freqpat.append(pat)
-            return (freqpat)
+            clump[i] = 1
+    #    print(clump)
+    for i in range (1, len(genome) - L + 1):
+        fp = genome[i - 1:i - 1+ k]
+        #print(fp)
+        index = patterntonumber(fp)
+        freqarray[index] = freqarray[index] - 1
+        lp = genome[i + L - k:i + L]
+        index = patterntonumber(lp)
+        freqarray[index] = freqarray[index] + 1
+        if freqarray[index] >= t:
+        #    print(freqarray[index])
+            clump[index] = 1
+    for i in range(0, 4**k):
+        if clump[i] == 1:
+            #print(freqarray[388])
+            pat = numbertopattern(i, k)
+            freqpat.append(pat)
+    return (freqpat)
 gen1 = "CGGACTCGACAGATGTGAAGAACGACAATGTGAAGACTCGACACGACAGAGTGAAGAGAAGAGGAAACATTGTAA"
 k1 = 5
 L1 = 50
 t1 = 4
-print (clumpfinding(gen1, k1, t1, L1))
+print (*clumpfinding(gen1, k1, t1, L1), sep=' ')
