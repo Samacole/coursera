@@ -59,7 +59,35 @@ def imneghbours(pattern):
     neighbourhood = [pattern]
     for i in range(1, len(pattern) + 1):
         symbol = pattern[i]
-        for i in
+    #    for i in
+
+def neghbours(pattern, d):
+    if d = 0:
+        return [pattern]
+    if len(pattern) = 1:
+        return ["A", "C", "G", "T"]
+    Neghbourhood = []
+    suffixnegh = neghbours(pattern[1:], d)
+    for i in
+
+
+#psudo code -
+'''
+    Neighbors(Pattern, d)
+        if d = 0
+            return {Pattern}
+        if |Pattern| = 1
+            return {A, C, G, T}
+        Neighborhood ← an empty set
+        SuffixNeighbors ← Neighbors(Suffix(Pattern), d)
+        for each string Text from SuffixNeighbors
+            if HammingDistance(Suffix(Pattern), Text) < d
+                for each nucleotide x
+                    add x • Text to Neighborhood
+            else
+                add FirstSymbol(Pattern) • Text to Neighborhood
+        return Neighborhood
+'''
 
 # sub routine to help with implimentation with aprox frequent words - will generate a list of potential
 # patterns of k lengh within a genome given mismatch int of d
