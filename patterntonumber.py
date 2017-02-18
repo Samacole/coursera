@@ -1,3 +1,5 @@
+
+#code the converts a pattern of k lengh into an integer to be used as an index in a frequency matching capacity. This uses "to the log4" methodology
 def patterntonumber(pattern):
     define = {"A" : 0, "C" : 1, "G" : 2, "T" : 3}
     if len(pattern) == 0:
@@ -7,6 +9,7 @@ def patterntonumber(pattern):
     s = define[s]
     return (4 * patterntonumber(pre)) + s
 
+#code to convert an integer to the log4 of k lengh back into a pattern - basis base nucleotides obv
 def numbertopattern(index, k):
     l = ["A", "C", "G", "T"]
     if k == 1:
@@ -16,7 +19,9 @@ def numbertopattern(index, k):
     q = l[int(s)]
     prepat = numbertopattern(int(d), k-1)
     return prepat + q
-
+#code to create a list of possible index's bases on the genome lengh and k lengh criteria, then iterates through the
+#genome provided adding a 1 to any index that has a pattern which can later be converted back pattern - idea is
+#you dont have to use so much memory storeing each combination of pattern k lengh
 def computingfrequencies(Text, k):
     i = 0
     j = 0
@@ -32,7 +37,8 @@ def computingfrequencies(Text, k):
         i += 1
     return (freq)
 
-
+#algo that uses the index log4 idea vs storing the patterns themselves in a list - much faster for bigger Genomes ,much slower for smaller
+#as allot of memory would be used to convert them back and forth
 def fasterfreqwords(Text, k):
     freqpat = []
     freqarray = computingfrequencies(Text, k)
@@ -43,8 +49,11 @@ def fasterfreqwords(Text, k):
             freqpat.append(pat)
     return (freqpat)
 
-
-
+#algo that leverages the previous log4 model and frequent words algo to find all patters that appear in genome that have
+#the following criteria: apear within the sliding window of L lengh, have a k lengh and apear atleast t times within that window
+#this is built on the idea that you can 'slide' the window accross by removing the first pattern and adding the last pattern
+#rather than iterating through the L window end to end with only moving 1 index
+#this model also uses the log 4 compression as per above, would be much faster to store the patterns themselves if the genome is short
 def clumpfinding(genome, k, t, L):
     freqpat = []
     clump = []
