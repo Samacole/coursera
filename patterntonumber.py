@@ -54,6 +54,7 @@ def fasterfreqwords(Text, k):
 #this is built on the idea that you can 'slide' the window accross by removing the first pattern and adding the last pattern
 #rather than iterating through the L window end to end with only moving 1 index
 #this model also uses the log 4 compression as per above, would be much faster to store the patterns themselves if the genome is short
+
 def clumpfinding(genome, k, t, L):
     freqpat = []
     clump = []
@@ -84,8 +85,8 @@ def clumpfinding(genome, k, t, L):
             pat = numbertopattern(i, k)
             freqpat.append(pat)
     return (freqpat)
-gen1 = "CGGACTCGACAGATGTGAAGAACGACAATGTGAAGACTCGACACGACAGAGTGAAGAGAAGAGGAAACATTGTAA"
-k1 = 5
-L1 = 50
-t1 = 4
-print (*clumpfinding(gen1, k1, t1, L1), sep=' ')
+gen1 = (open('Ecoli.txt', 'r')).read()
+k1 = 9
+L1 = 500
+t1 = 3
+print (len(clumpfinding(gen1, k1, t1, L1)))
