@@ -52,8 +52,17 @@ def aproxpatterncount(pattern, text, d):
             count = count + 1
     return (count)
 
-pat = "GCTCCA"
-gen = "GGGTGCGGGTGGAATATTCGGGGACAATCCATTCTCGTTTGAACTACTCCAGGATTCGAGTTGGCTCCACGTATTATGTCGCAGTAATGCCTTAGGAAAAATCATACCCTCTTGAGCGTGACCGCTCTAATCCTTTAAAATGAATCGCATACAGGCAACCCACTTCGAAGAAAACACTAAGTTCTGAAAAGAGCTACAGTCTCCTGTGTGTATAAAGAGCCCACTACATTGTGCGCTACGCGTCCTCCCCCTTCTTTGTGCGAGTGGATCGGGTTCTAGCGGACAATACCAAGCATTAGAATGGGCTATGTAAGATCCACCCAATTTACCATATTAACTAGACTAACGCTGCAAGGACTGGCAAGGAGGTGCTAAGGACAAGTTAT"
-d = 3
+#sub routine to help with finding possible neghours in a genome
+#input - pattern
+#output - list of possible patterns given 1 change is relivant (d = 1)
+def imneghbours(pattern):
+    neighbourhood = [pattern]
+    for i in range(1, len(pattern) + 1):
+        symbol = pattern[i]
+        for i in
 
-print(aproxpatterncount(pat, gen, d))
+# sub routine to help with implimentation with aprox frequent words - will generate a list of potential
+# patterns of k lengh within a genome given mismatch int of d
+#inputs - text (genome), k (lengh of pattern), d (int denoting max number of mismatches)
+#output - freq array of possible potential matches given d (in index form) (using pattern to number varient "neghbours")
+def compfreqwithmismatches(text, k, d):
