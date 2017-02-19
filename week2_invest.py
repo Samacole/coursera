@@ -27,6 +27,6 @@ def removespaces(text):
 
 
 Senterica = (open('Senterica3.txt', 'r')).read()
+# not working as file may have line breaks? not sure how to fix so will go on to next Week as this is optional
 
-
-print(Minskew(Senterica))
+print(Minskew(str(Senterica)))
