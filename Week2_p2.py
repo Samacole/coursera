@@ -16,7 +16,4 @@ def Minskew(Genome):
     minindex = [i for i in range(0,len(skewlist)) if skewlist[i] == minvalue]
     return minindex
 
-gen = (open('dataset1.txt', 'r')).read()
-
-
 print(*Minskew("CATTCCAGTACTTCGATGATGGCGTGAAGA"), sep =' ')
