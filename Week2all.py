@@ -115,5 +115,90 @@ def compfreqwithmismatches(text, k, d):
             j = patterntonumber(aprox)
             freqarray[j] = freqarray[j] + 1
     return (freqarray)
+# Frequent words with mismatches - leverages above algo for inclusion of "mistmatchs" of order d
+# input - Genome, pattern lengh (k), hamming distance units (d)
+# Output - List of the most frequent patterns seporated by a space (given the hamming distance provided)
+'''
+def freqwordswithmismatches(text, k , d):
+    freqpat = []
+    neghbourhood = []
+    for i in range(0, len(text) - k + 1):
+        neghbourhood.append(neghbours(text[i:i+k],d))
+    neghbourhoodarray = reduce(operator.concat, neghbourhood)
+    for i in neghbourhoodarray:
+        pattern = neghbourhoodarray[i]
+        index
+'''
+#the psudo code is hard to understand so will impliment my own
+def freqwordsmismatch(text, k, d):
+    freqpat = []
+    freqarray = compfreqwithmismatches(text, k, d)
+    maxcount = max(freqarray)
+    for i in range(0, 4 ** k):
+        if freqarray[i] == maxcount:
+            pat = numbertopattern(i, k)
+            freqpat.append(pat)
+    return (freqpat)
 
-print(*compfreqwithmismatches("ACGTTGCATGTCGCATGATGCATGAGAGCT", 4, 1), sep=' ')
+#gen5 = "ATAATAGTCGTATACTGTCGTTAATAACTACTGTCGATAACTGTCGTTATTATATTTAATAATAATATATGTCGGTCGTTATATTTATTATTAACTGTCGTATATATATTTAATATTAATAATAATATATTATTATATAATATTATTAACTGTCGTTAGTCGGTCGTTAATAGTCGGTCGATATATTATTATTATTATACTGTCGGTCGATATTATTAGTCGACTATATTAGTCGACTGTCGATAATAGTCGTTAATAACTTTAACTTTAGTCGGTCGGTCGATAATAGTCGGTCGGTCGTTATTAACTTATTTATATTTATTAATATTAATAGTCGGTCGGTCGATAATAGTCGTATTTAACTTATATAACT"
+#print(*freqwordsmismatch(gen5, 7, 2), sep=' ')
+
+#adding in some functions from week 1 to do with reverse complements
+def reverse(text):
+    position = len(text) - 1
+    empty = ""
+    empty += text[position]
+    position -= 1
+    while position >= 0:
+        empty += text[position]
+        position -= 1
+    return empty
+
+def compliment(text):
+    Definition = {'A' : 'T', 'G' : 'C', 'T' : 'A', 'C' : 'G'}
+    EmpString = ""
+    Count = 0
+    MaxLength = len(text) - 1
+    Nucleo = text[Count]
+    EmpString += Definition[Nucleo]
+    while Count < MaxLength:
+        Count += 1
+        Nucleo = text[Count]
+        EmpString += Definition[Nucleo]
+    return EmpString
+
+def reversecomplement(text):
+        a = compliment(text)
+        return reverse(a)
+
+#freq array generator to include mismatches as rever compliments
+def compfreqwithmismatchesreversecomp(text, k, d):
+    freqarray = []
+    for i in range(0, 4 ** k):
+        freqarray.append(0)
+    for i in range(0, len(text) - k + 1 ):
+        pattern = text[i:i + k]
+        neighbourhood = neghbours(pattern, d)
+        for aprox in neighbourhood:
+            a = reversecomplement(aprox)
+            b = patterntonumber(a)
+            j = patterntonumber(aprox)
+            freqarray[j] = freqarray[j] + 1
+            freqarray[b] = freqarray[b] +1
+    return (freqarray)
+
+
+def freqwordsmismatchRC(text, k, d):
+    freqpat = []
+    freqarray = compfreqwithmismatchesreversecomp(text, k, d)
+    maxcount = max(freqarray)
+    for i in range(0, 4 ** k):
+        if freqarray[i] == maxcount:
+            pat = numbertopattern(i, k)
+            freqpat.append(pat)
+    return (freqpat)
+
+
+#gen4 = "ACACGCGCCCGGCCCGCCGACCTAACCTACCGACCCGCCGGCGCCCGCCGCCGACACCCGCCGCCGCCGCCGACGCACACCCGGCGCACCCGCCGGCCTACCGCCGGCGCCCGCCGCTAGCGCCTAGCGCACCCGGCCCGACCTAACGCCCGCCGCCGGCGCGCCCGCTAGCCTACCGGCCCGCTACCGCTACCGGCGCGCCTAACCTACCGGCCTAACCCGGCGCCCGCTACCG"
+
+#print(*freqwordsmismatchRC(gen4, 5, 3), sep = ' ')
