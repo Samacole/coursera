@@ -55,42 +55,65 @@ def aproxpatterncount(pattern, text, d):
 #sub routine to help with finding possible neghours in a genome
 #input - pattern
 #output - list of possible patterns given 1 change is relivant (d = 1)
+'''
 def imneghbours(pattern):
     neighbourhood = [pattern]
     for i in range(1, len(pattern) + 1):
         symbol = pattern[i]
     #    for i in
 
+    '''
 def neghbours(pattern, d):
-    if d = 0:
+    if d == 0:
         return [pattern]
-    if len(pattern) = 1:
+    if len(pattern) == 1:
         return ["A", "C", "G", "T"]
     Neghbourhood = []
     suffixnegh = neghbours(pattern[1:], d)
-    for i in
+    for text in suffixnegh:
+        if hammingdistance(pattern[1:], text) < d:
+            for x in ["A", "C", "G", "T"]:
+                Neghbourhood.append(x + text)
+        else:
+            Neghbourhood.append(pattern[:1] + text)
+    return (Neghbourhood)
+#print(*neghbours("CTGAGCTAAG", 3), sep ='\n')
 
+#code the converts a pattern of k lengh into an integer to be used as an index in a frequency matching capacity. This uses "to the log4" methodology
+def patterntonumber(pattern):
+    define = {"A" : 0, "C" : 1, "G" : 2, "T" : 3}
+    if len(pattern) == 0:
+        return 0
+    s = pattern[len(pattern)-1]
+    pre = pattern[:len(pattern)-1]
+    s = define[s]
+    return (4 * patterntonumber(pre)) + s
 
-#psudo code -
-'''
-    Neighbors(Pattern, d)
-        if d = 0
-            return {Pattern}
-        if |Pattern| = 1
-            return {A, C, G, T}
-        Neighborhood ← an empty set
-        SuffixNeighbors ← Neighbors(Suffix(Pattern), d)
-        for each string Text from SuffixNeighbors
-            if HammingDistance(Suffix(Pattern), Text) < d
-                for each nucleotide x
-                    add x • Text to Neighborhood
-            else
-                add FirstSymbol(Pattern) • Text to Neighborhood
-        return Neighborhood
-'''
+#code to convert an integer to the log4 of k lengh back into a pattern - basis base nucleotides obv
+def numbertopattern(index, k):
+    l = ["A", "C", "G", "T"]
+    if k == 1:
+        return l[index]
+    d = index / 4
+    s = index % 4
+    q = l[int(s)]
+    prepat = numbertopattern(int(d), k-1)
+    return prepat + q
 
 # sub routine to help with implimentation with aprox frequent words - will generate a list of potential
 # patterns of k lengh within a genome given mismatch int of d
 #inputs - text (genome), k (lengh of pattern), d (int denoting max number of mismatches)
 #output - freq array of possible potential matches given d (in index form) (using pattern to number varient "neghbours")
 def compfreqwithmismatches(text, k, d):
+    freqarray = []
+    for i in range(0, 4 ** k):
+        freqarray.append(0)
+    for i in range(0, len(text) - k + 1 ):
+        pattern = text[i:i + k]
+        neighbourhood = neghbours(pattern, d)
+        for aprox in neighbourhood:
+            j = patterntonumber(aprox)
+            freqarray[j] = freqarray[j] + 1
+    return (freqarray)
+
+print(*compfreqwithmismatches("ACGTTGCATGTCGCATGATGCATGAGAGCT", 4, 1), sep=' ')
