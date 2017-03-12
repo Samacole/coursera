@@ -121,18 +121,22 @@ def motifenumeration(DNA, k, d):
         for neighbor in neighbors:
             oc = 0
             for str in DNA:
-                pos = freqwordsmismatch(neighbor, str, d)
+                pos = aproxpatternmatch(neighbor, str, d)
                 if len(pos) > 0:
                     oc += 1
             if oc == l_dna:
-                patterns.add(neighbor)
-    return patterns
-
-#DNA_1 = ["ATTTGGC", "TGCCTTA", "CGGTATC", "GAAAATT"]
-#K_1 = 3
-#D_1 = 1
-
-#print(motifenumeration(DNA_1, K_1, D_1))
+                patterns.append(neighbor)
+    return (remove_duplicates(patterns))
 
 
-print(patterntonumber("AATTA"))
+
+DNA_1 = ["ATTTGGC", "TGCCTTA", "CGGTATC", "GAAAATT"]
+
+DNA_2 = ["GTCCCGATGCCTAAGCGTACAGGAA", "ATTCGGGCAGCTACAGCTAAAGAAT", "TTGGAGAGTAAAGTACCACCAGCAG", "AGCACCAGTACATGCAAATGACAGT", "GCCCGGATACAGTACCATCAGCATC", "TGAAAATCTCACTAAGTTGGAGAAT"]
+K_1 = 5
+D_1 = 2
+
+print(*motifenumeration(DNA_2, K_1, D_1), sep=' ')
+
+
+#print(patterntonumber("AATTA"))
