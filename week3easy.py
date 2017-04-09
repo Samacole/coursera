@@ -1,5 +1,5 @@
 
-
+import math
 def Count(Motifs):
     k = len(Motifs[0])
     count = {}
@@ -71,6 +71,35 @@ def Profile(Motifs):
             count[let][j] = count[let][j] / k
     return (count)
 
+def Entrop(profile):
+    entrolist = []
+    k = len(profile["A"])
+    for a in range(0, k):
+        entrolist.append(0)
+    letter = "ACGT"
+    for i in range(0,k):
+        entronum = 0
+        for j in range(0,3):
+            poslet = letter[j]
+            entropart = profile[poslet][i]
+            if entropart == 0.0:
+                entrocalc = 0
+            else:
+                entrocalc = entropart * math.log2(entropart)
+            entronum = entronum + entrocalc
+            entrolist[i] = -(entronum)
+    return entrolist
+
+
+def sument(profile):
+    numb = Entrop(profile)
+    k = len(numb)
+    count = 0
+    for i in range(0, k):
+        count = count + numb[i]
+    return count
+
+
 def GreedyMotifSearch(dna, k ,t):
     bestmotifs = []
     for i in range(0, t):
@@ -84,8 +113,25 @@ def GreedyMotifSearch(dna, k ,t):
             motifs.append(ProfileMostProbablePattern(dna[j], k, p))
         if Score(motifs) < Score(bestmotifs):
             bestmotifs = motifs
+            print(bestmotifs)
     return bestmotifs
-dna2 = ["GGCGTTCAGGCA", "AAGAATCAGTCA", "CAAGGAGTTCGC", "CACGTCAATCAC", "CAATAATATTCG"]
+#dna2 = ["GCAGGTTAATACCGCGGATCAGCTGAGAAACCGGAATGTGCGT", "CCTGCATGCCCGGTTTGAGGAACATCAGCGAAGAACTGTGCGT", "GCGCCAGTAACCCGTGCCAGTCAGGTTAATGGCAGTAACATTT", "AACCCGTGCCAGTCAGGTTAATGGCAGTAACATTTATGCCTTC", "ATGCCTTCCGCGCCAATTGTTCGTATCGTCGCCACTTCGAGTG"]
+
+#dna3 = ["GCAGGTTAATACCGCGGATCAGCTGAGAAACCGGAATGTGCGT", "CCTGCATGCCCGGTTTGAGGAACATCAGCGAAGAACTGTGCGT", "GCGCCAGTAACCCGTGCCAGTCAGGTTAATGGCAGTAACATTT", "AACCCGTGCCAGTCAGGTTAATGGCAGTAACATTTATGCCTTC", "ATGCCTTCCGCGCCAATTGTTCGTATCGTCGCCACTTCGAGTG"]
+
+M = [
+"TCGGGGGTTTTT",
+"CCGGTGACTTAC",
+"ACGGGGATTTTC",
+"TTGGGGACTTTT",
+"AAGGGGACTTCC",
+"TTGGGGACTTCC",
+"TCGGGGATTCAT",
+"TCGGGGATTCCT",
+"TAGGGGAACTAC",
+"TCGGGTATAACC"
+]
+
 #a = ["AACGTA", "CCCGTT", "CACCTT", "GGATTA", "TTCCGG"]
 
 #prof1 = {"A":[0.2, 0.2, 0.3, 0.2, 0.3], "C": [0.4, 0.3, 0.1, 0.5, 0.1], "G": [0.3, 0.3, 0.5, 0.2, 0.4], "T": [0.1, 0.2, 0.1, 0.1, 0.2]}
@@ -93,4 +139,6 @@ dna2 = ["GGCGTTCAGGCA", "AAGAATCAGTCA", "CAAGGAGTTCGC", "CACGTCAATCAC", "CAATAAT
 #prof3 = {"A":[0.2, 0.2, 0.3, 0.2, 0.3], "C": [0.4, 0.3, 0.1, 0.5, 0.1], "G": [0.3, 0.3, 0.5, 0.2, 0.4], "T": [0.1, 0.2, 0.1, 0.1, 0.2]}
 #t1 ="TTACCATGGGACCGCTGACTGATTTCTGGCGTCAGCGTGATGCTGGTGTGGATGACATTCCGGTGCGCTTTGTAAGCAGAGTTTA"
 #print(ProfileMostProbablePattern(t1, 5, prof3))
-print(GreedyMotifSearch(dna2, 3, 5))
+#print(GreedyMotifSearch(dna3, 6, 5))
+#print(Profile(Motifs))
+print(sument(Profile(M)))
