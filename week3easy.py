@@ -71,7 +71,26 @@ def Profile(Motifs):
             count[let][j] = count[let][j] / k
     return (count)
 
-a = ["AACGTA", "CCCGTT", "CACCTT", "GGATTA", "TTCCGG"]
+def GreedyMotifSearch(dna, k ,t):
+    bestmotifs = []
+    for i in range(0, t):
+        bestmotifs.append(dna[i][0:k])
+    n = len(dna[0])
+    for i in range(n-k+1):
+        motifs = []
+        motifs.append(dna[0][i:i+k])
+        for j in range(1, t):
+            p = Profile(motifs[0:j])
+            motifs.append(ProfileMostProbablePattern(dna[j], k, p))
+        if Score(motifs) < Score(bestmotifs):
+            bestmotifs = motifs
+    return bestmotifs
+dna2 = ["GGCGTTCAGGCA", "AAGAATCAGTCA", "CAAGGAGTTCGC", "CACGTCAATCAC", "CAATAATATTCG"]
+#a = ["AACGTA", "CCCGTT", "CACCTT", "GGATTA", "TTCCGG"]
 
-
-print(Score(a))
+#prof1 = {"A":[0.2, 0.2, 0.3, 0.2, 0.3], "C": [0.4, 0.3, 0.1, 0.5, 0.1], "G": [0.3, 0.3, 0.5, 0.2, 0.4], "T": [0.1, 0.2, 0.1, 0.1, 0.2]}
+#prof2 = {"A":[0.7, 0.2, 0.1, 0.5, 0.4, 0.3, 0.2, 0.1], "C": [0.2, 0.2, 0.5, 0.4, 0.2, 0.3, 0.1, 0.6], "G": [0.1, 0.3, 0.2, 0.1, 0.2, 0.1, 0.4, 0.2], "T": [0.0, 0.3, 0.2, 0.0, 0.2, 0.3, 0.3, 0.1]}
+#prof3 = {"A":[0.2, 0.2, 0.3, 0.2, 0.3], "C": [0.4, 0.3, 0.1, 0.5, 0.1], "G": [0.3, 0.3, 0.5, 0.2, 0.4], "T": [0.1, 0.2, 0.1, 0.1, 0.2]}
+#t1 ="TTACCATGGGACCGCTGACTGATTTCTGGCGTCAGCGTGATGCTGGTGTGGATGACATTCCGGTGCGCTTTGTAAGCAGAGTTTA"
+#print(ProfileMostProbablePattern(t1, 5, prof3))
+print(GreedyMotifSearch(dna2, 3, 5))
