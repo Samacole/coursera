@@ -113,7 +113,6 @@ def GreedyMotifSearch(dna, k ,t):
             motifs.append(ProfileMostProbablePattern(dna[j], k, p))
         if Score(motifs) < Score(bestmotifs):
             bestmotifs = motifs
-            print(bestmotifs)
     return bestmotifs
 #dna2 = ["GCAGGTTAATACCGCGGATCAGCTGAGAAACCGGAATGTGCGT", "CCTGCATGCCCGGTTTGAGGAACATCAGCGAAGAACTGTGCGT", "GCGCCAGTAACCCGTGCCAGTCAGGTTAATGGCAGTAACATTT", "AACCCGTGCCAGTCAGGTTAATGGCAGTAACATTTATGCCTTC", "ATGCCTTCCGCGCCAATTGTTCGTATCGTCGCCACTTCGAGTG"]
 
@@ -132,13 +131,27 @@ M = [
 "TCGGGTATAACC"
 ]
 
+
+
+A1 =[0.4, 0.3, 0.0, 0.1, 0.0, 0.9]
+C2 = [0.2, 0.3, 0.0, 0.4, 0.0, 0.1]
+G2 = [0.1, 0.3, 1.0, 0.1, 0.5, 0.0]
+T2 = [0.3, 0.1, 0.0, 0.4, 0.5, 0.0]
+
+prof123 = {"A":A1, "C":C2, "G":G2, "T":T2}
 #a = ["AACGTA", "CCCGTT", "CACCTT", "GGATTA", "TTCCGG"]
 
-#prof1 = {"A":[0.2, 0.2, 0.3, 0.2, 0.3], "C": [0.4, 0.3, 0.1, 0.5, 0.1], "G": [0.3, 0.3, 0.5, 0.2, 0.4], "T": [0.1, 0.2, 0.1, 0.1, 0.2]}
+#prof1 = {"A":[0.2, 0.2, 0.0, 0.0, 0.0, 0.0, 0.9, 0.1, 0.1, 0.1, 0.3, 0.0], "C": [0.1, 0.6, 0.0, 0.0, 0.0, 0.0, 0.0, 0.4, 0.1, 0.2, 0.4, 0.6], "G": [0.0, 0.0, 1.0, 1.0, 0.9, 0.9, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0], "T": [0.7, 0.2, 0.0, 0.0, 0.1, 0.1, 0.0, 0.5, 0.8, 0.7, 0.3, 0.4]}
 #prof2 = {"A":[0.7, 0.2, 0.1, 0.5, 0.4, 0.3, 0.2, 0.1], "C": [0.2, 0.2, 0.5, 0.4, 0.2, 0.3, 0.1, 0.6], "G": [0.1, 0.3, 0.2, 0.1, 0.2, 0.1, 0.4, 0.2], "T": [0.0, 0.3, 0.2, 0.0, 0.2, 0.3, 0.3, 0.1]}
 #prof3 = {"A":[0.2, 0.2, 0.3, 0.2, 0.3], "C": [0.4, 0.3, 0.1, 0.5, 0.1], "G": [0.3, 0.3, 0.5, 0.2, 0.4], "T": [0.1, 0.2, 0.1, 0.1, 0.2]}
 #t1 ="TTACCATGGGACCGCTGACTGATTTCTGGCGTCAGCGTGATGCTGGTGTGGATGACATTCCGGTGCGCTTTGTAAGCAGAGTTTA"
 #print(ProfileMostProbablePattern(t1, 5, prof3))
 #print(GreedyMotifSearch(dna3, 6, 5))
 #print(Profile(Motifs))
-print(sument(Profile(M)))
+#print(sument(Profile(M)))
+
+#print(sument(Profile(M)))9
+print(-(0.2 * (math.log2(0.2)) + 0.6 * (math.log2(0.6)) + 0.2 * (math.log2(0.2))))
+
+
+# may be an issue if there is a 0 in the log as log0 is error - no issue with teh summing , will have to test one by one later
